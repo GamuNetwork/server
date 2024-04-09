@@ -1,0 +1,9 @@
+name: On push to any branch
+on:
+  push:
+    branches:
+      - '*' # Push to any branch
+
+jobs:
+    unitTests:
+        uses: GamuNetwork/serverTestCi/.github/workflows/unitTests.yml@main
