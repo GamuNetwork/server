@@ -6,4 +6,5 @@ on:
 
 jobs:
     unitTests:
-        uses: GamuNetwork/serverTestCi/.github/workflows/unitTests.yml@main
+        # use the unitTests job from the same repository (and branch)
+        uses: ./.github/workflows/unitTests.yml
