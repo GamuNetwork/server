@@ -7,7 +7,7 @@ const Cleaner = {
 
         fs.rmSync('./suite-info.json')
         fs.rmSync('./spec-result.json')
-        fs.rmSync('./done.json')
+        fs.rmSync('./done.json') 
     }
 }
 
