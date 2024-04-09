@@ -1,1 +1,10 @@
+name: On push to main branch
+on:
+  push:
+    branches:
+      - main
 
+# call the workflow unitTests on ubuntu-latest
+jobs:
+  unitTests:
+    uses: GamuNetwork/serverTestCi/.github/workflows/unitTests.yml@main
