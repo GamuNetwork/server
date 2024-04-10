@@ -1,3 +1,10 @@
+# application files
 node_modules
 .env
 logs
+
+# vscode
+*.code-workspace
+.vscode
+
+# builders folder contain it's own .gitignore

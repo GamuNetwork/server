@@ -1,0 +1,18 @@
+name: On push to main branch
+on:
+  push:
+    branches:
+      - main
+
+# call the workflow unitTests on ubuntu-latest
+jobs:
+  Deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: npm install
+
+      #for now we are just installing the dependencies

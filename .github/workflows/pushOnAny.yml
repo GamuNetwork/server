@@ -1,0 +1,10 @@
+name: On push to any branch
+on:
+  push:
+    branches:
+      - '*' # Push to any branch
+
+jobs:
+    unitTests:
+        # use the unitTests job from the same repository (and branch)
+        uses: ./.github/workflows/unitTests.yml

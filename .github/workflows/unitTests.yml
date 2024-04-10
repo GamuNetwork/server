@@ -1,0 +1,32 @@
+name: unit tests - ubuntu
+run-name: unit tests for ubuntu by @${{ github.actor }}
+
+# this workflow is triggered by another workflow, that handles all tests for all platforms
+# this workflow is responsible for running tests on ubuntu platform
+
+on:
+  workflow_call
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests #this will run tests using jasmine
+        run: npm test
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-results
+          path: tests/reports/ctrf-report.json
