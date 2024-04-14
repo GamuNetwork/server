@@ -26,6 +26,7 @@
 # dependencies
 node_modules/
 jspm_packages/
+env/
 
 # logs and databases
 *.log
