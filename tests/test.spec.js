@@ -1,6 +1,7 @@
 describe('Test', () => {
     it('should pass', () => {
         expect(true).toBe(true);
+        expect(1).toBe(1);
     });
     it('should fail', () => {
         expect(false).toBe(true);
@@ -10,5 +11,10 @@ describe('Test', () => {
     });
     xit('should be disabled', () => {
         expect(true).toBe(true);
+    });
+    it('should fail', () => {
+        expect(true).toBe(true);
+        expect(false).toBe(false);
+        expect(1).toBe(2);
     });
 });

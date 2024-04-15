@@ -21,37 +21,61 @@ function sweetMerge(dict1, dict2){
 const JsonExporter = function(outputFile){
 
     var suites = {};
-    suites['orphansSpecs'] = [];
+    var orphans = {
+        passed: 0,
+        failed: 0,
+        pending: 0,
+        skipped: 0,
+        duration: 0,
+        specs: []
+    };
 
     var summary = {
         appName: packageJson.name,
         appVersion: packageJson.version,
         specs: 0,
         failures: 0,
+        passed: 0,
         pending: 0,
+        skipped: 0,
         duration: 0,
-        startDate: new Date().toUTCString()
+        startDate: new Date().toISOString()
     };
 
     this.suiteStarted = function(suiteInfo) {
-        suites[suiteInfo.id] = sweetMerge(suiteInfo, {specs: []});
+        suites[suiteInfo.id] = sweetMerge(suiteInfo, {passed: 0, failed: 0, pending: 0, skipped: 0, duration: 0, specs: []});
     }
 
     this.specDone = function(result) {
+        parentSuite = null;
         if(result.parentSuiteId){
-            suites[result.parentSuiteId].specs.push(result);
+            parentSuite = suites[result.parentSuiteId]
+            parentSuite.specs.push(result);
         }
         else{
-            suites['orphansSpecs'].push(result);
+            parentSuite = orphans;
+            orphans.specs.push(result);
         }
 
         summary.specs++;
         summary.duration += result.duration;
-        if(result.status === 'failed'){
+        parentSuite.duration += result.duration;
+
+        if(result.pendingReason === 'Temporarily disabled with xit'){
+            summary.skipped++;
+            parentSuite.skipped++;
+        }
+        else if(result.status === 'failed'){
             summary.failures++;
+            parentSuite.failed++;
         }
         else if(result.status === 'pending'){
             summary.pending++;
+            parentSuite.pending++;
+        }
+        else{
+            summary.passed++;
+            parentSuite.passed++;
         }
     }
     
@@ -60,7 +84,7 @@ const JsonExporter = function(outputFile){
     }
 
     this.jasmineDone = function(suiteInfo) {
-        fs.writeFileSync(outputFile, JSON.stringify({summary: summary, suites: suites}, null, 4));
+        fs.writeFileSync(outputFile, JSON.stringify({summary: summary, suites: suites, orphans: orphans}, null, 4));
     }
 };
 
