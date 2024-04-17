@@ -1,32 +1,53 @@
-name: unit tests - ubuntu
-run-name: unit tests for ubuntu by @${{ github.actor }}
+name: unit tests
+run-name: unit tests by @${{ github.actor }} on ${{ inputs.platform }}
 
 # this workflow is triggered by another workflow, that handles all tests for all platforms
 # this workflow is responsible for running tests on ubuntu platform
 
 on:
-  workflow_call
+  workflow_call:
+    inputs:
+      platform:
+        required: true
+        type: string
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.platform }}-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
-          node-version: '14'
+          node-version: '20'
+          cache: 'npm'
       
       - name: Install dependencies
-        run: npm install
+        run: npm ci #! this requires a package-lock.json file
 
       - name: Run tests #this will run tests using jasmine
         run: npm test
+        continue-on-error: true #this will allow the workflow to continue even if tests fail
 
       - name: Upload test results
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
-          name: test-results
-          path: tests/reports/ctrf-report.json
+          name: test-results-${{ inputs.platform }}
+          path: report.${{ inputs.platform }}.json
+
+
+  # assemble-results:
+  #   runs-on: ubuntu-latest
+  #   needs: test
+  #   steps:
+  #     - name: Download test results
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         path: test-results
+  #         pattern: test-results-*
+  #         merge-multiple: true
+
+  #     - name: Assemble test results

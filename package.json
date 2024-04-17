@@ -6,7 +6,8 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "jasmine --config=config/jasmine/jasmine.json"
+    "test": "jasmine --config=config/jasmine/jasmine.json",
+    "start": "node start.mjs"
   },
   "author": "Lila BRANDON, Antoine BUIREY",
   "license": "ISC",
@@ -16,7 +17,6 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "jasmine": "^5.1.0",
-    "jasmine-ctrf-json-reporter": "^0.0.4",
     "nodemon": "^3.1.0"
   }
 }
