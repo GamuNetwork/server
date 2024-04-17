@@ -1,0 +1,5 @@
+# Python virtual environment files
+env/
+
+# Python bytecode
+*.py[cod]
