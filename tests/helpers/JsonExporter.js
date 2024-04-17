@@ -40,7 +40,7 @@ const JsonExporter = function(outputFile){
         pending: 0,
         skipped: 0,
         duration: 0,
-        specs: []
+        specs: {}
     };
 
     var summary = {
@@ -57,18 +57,18 @@ const JsonExporter = function(outputFile){
     };
 
     this.suiteStarted = function(suiteInfo) {
-        suites[suiteInfo.id] = sweetMerge(suiteInfo, {passed: 0, failed: 0, pending: 0, skipped: 0, duration: 0, specs: []});
+        suites[suiteInfo.id] = sweetMerge(suiteInfo, {passed: 0, failed: 0, pending: 0, skipped: 0, duration: 0, specs: {}});
     }
 
     this.specDone = function(result) {
         parentSuite = null;
         if(result.parentSuiteId){
             parentSuite = suites[result.parentSuiteId]
-            parentSuite.specs.push(result);
+            parentSuite.specs[result.id] = result;
         }
         else{
             parentSuite = orphans;
-            orphans.specs.push(result);
+            orphans.specs[result.id] = result;
         }
 
         summary.specs++;
@@ -94,7 +94,13 @@ const JsonExporter = function(outputFile){
     }
     
     this.suiteDone = function(result) {
-        sweetMerge(suites[result.id], result);
+        let SuiteSpecs = {};
+        for (let spec in suites[result.id].specs){
+            SuiteSpecs[spec] = suites[result.id].specs[spec];
+        }
+        suites[result.id].specs = SuiteSpecs;
+        suites[result.id] =
+        sweetMerge(suites[result.id], result)
     }
 
     this.jasmineDone = function(suiteInfo) {
