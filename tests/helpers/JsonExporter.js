@@ -18,6 +18,19 @@ function sweetMerge(dict1, dict2){
     return dict1;
 }
 
+function getOS(){
+    switch(process.platform){
+        case 'win32':
+            return 'Windows';
+        case 'darwin':
+            return 'MacOS';
+        case 'linux':
+            return 'Linux';
+        default:
+            return "Unknown OS"
+    }
+}
+
 const JsonExporter = function(outputFile){
 
     var suites = {};
@@ -33,6 +46,7 @@ const JsonExporter = function(outputFile){
     var summary = {
         appName: packageJson.name,
         appVersion: packageJson.version,
+        os: getOS(),
         specs: 0,
         failures: 0,
         passed: 0,
