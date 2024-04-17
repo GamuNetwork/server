@@ -21,11 +21,11 @@ function sweetMerge(dict1, dict2){
 function getOS(){
     switch(process.platform){
         case 'win32':
-            return 'Windows';
+            return 'windows';
         case 'darwin':
-            return 'MacOS';
+            return 'macos';
         case 'linux':
-            return 'Linux';
+            return 'ubuntu';
         default:
             return "Unknown OS"
     }
@@ -102,6 +102,6 @@ const JsonExporter = function(outputFile){
     }
 };
 
-reporter = new JsonExporter("report.json");
+reporter = new JsonExporter("report."+getOS()+".json");
 
 jasmine.getEnv().addReporter(reporter);

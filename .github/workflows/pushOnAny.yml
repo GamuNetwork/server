@@ -10,7 +10,7 @@ jobs:
         uses: ./.github/workflows/unitTests.yml
         strategy:
             matrix:
-                platform: [ubuntu-latest, windows-latest, macos-latest]
+                platform: [ubuntu, windows, macos]
 
         with: # this will pass the platform to the called workflow
             platform: ${{ matrix.platform }}
