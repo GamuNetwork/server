@@ -18,3 +18,7 @@ describe('Test', () => {
         expect(1).toBe(2);
     });
 });
+
+it('should be a top-level test', () => {
+    expect(true).toBe(true);
+});
