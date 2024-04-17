@@ -35,4 +35,4 @@ env/
 */log
 
 # tests reports
-*/reports
+report.json
