@@ -12,7 +12,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install dependencies
-        run: npm install
+      - name: temp
+        run: echo "temp"
 
-      #for now we are just installing the dependencies
+      # just to show that the workflow is running

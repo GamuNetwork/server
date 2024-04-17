@@ -1,15 +1,20 @@
-name: unit tests - ubuntu
-run-name: unit tests for ubuntu by @${{ github.actor }}
+name: unit tests
+run-name: unit tests by @${{ github.actor }} on ${{ inputs.platform }}
 
 # this workflow is triggered by another workflow, that handles all tests for all platforms
 # this workflow is responsible for running tests on ubuntu platform
 
 on:
-  workflow_call
+  workflow_call:
+    inputs:
+      platform:
+        required: true
+        type: string
+
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.platform }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -18,9 +23,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'npm'
       
       - name: Install dependencies
-        run: npm install
+        run: npm ci #! this requires a package-lock.json file
 
       - name: Run tests #this will run tests using jasmine
         run: npm test
