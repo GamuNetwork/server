@@ -1,6 +1,5 @@
 const fs = require('fs');
 const packageJson = require('../../package.json');
-const { start } = require('repl');
 
 function sweetMerge(dict1, dict2){
     for (var key in dict2){
