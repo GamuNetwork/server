@@ -30,13 +30,13 @@ jobs:
 
       - name: Run tests #this will run tests using jasmine
         run: npm test
-        continue-on-error: true #this will allow the workflow to continue even if tests fail
 
       - name: Upload test results
         uses: actions/upload-artifact@v4
         with:
           name: test-results-${{ inputs.platform }}
           path: report.${{ inputs.platform }}.json
+        if: always()
 
 
   # assemble-results:
