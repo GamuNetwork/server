@@ -45,9 +45,9 @@ function parseStack(stack){ //type: string
         for (var i = 1; i < stack.length; i++){
             var line = stack[i].replace(/\n/g, "")
             //find if the line contain a file path
-            var filePath = line.match(/[A-Z]:\\.*\.[a-z]+:\d+:\d+/g);
+            var filePath = line.match(/(\/.*\.js):([0-9]*):([0-9]*)/);
             if(filePath !== null){
-                let tokens = filePath[0].match(/([A-Z]:\\.*\.[a-z]+):(\d+):(\d+)/).slice(1);
+                let tokens = filePath[0].match(/(\/.*\.js):([0-9]*):([0-9]*)/);
                 newStack.push({
                     filePath: tokens[0],
                     lineNumber: tokens[1],
