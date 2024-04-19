@@ -11,6 +11,7 @@ jobs:
         strategy:
             matrix:
                 platform: [ubuntu, windows, macos]
+            fail-fast: false
 
         with: # this will pass the platform to the called workflow
             platform: ${{ matrix.platform }}
