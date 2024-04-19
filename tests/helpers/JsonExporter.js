@@ -47,11 +47,11 @@ function parseStack(stack){ //type: string
             //find if the line contain a file path
             var filePath = line.match(/(\/.*\.js):([0-9]*):([0-9]*)/);
             if(filePath !== null){
-                let tokens = filePath[0].match(/(\/.*\.js):([0-9]*):([0-9]*)/);
+                let tokens = filePath[0].split(":");
                 newStack.push({
-                    filePath: tokens[0],
-                    lineNumber: tokens[1],
-                    columnNumber: tokens[2]
+                    columnNumber: tokens[tokens.length-1],
+                    lineNumber: tokens[tokens.length-2],
+                    filePath: tokens.slice(0, tokens.length-2).join(":")
                 });
             }
         }
