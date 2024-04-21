@@ -5,10 +5,7 @@ run-name: merge and report tests by @${{ github.actor }}
 # this workflow is responsible for merging test results from all platforms
 
 on:
-  workflow_run:
-    workflows: ["unit tests"]
-    types:
-      - completed
+  - workflow_call
   
 jobs:
   merge:
