@@ -21,7 +21,7 @@ jobs:
           path: test-results
 
       - name: get merger script
-        uses: 'GamuNetwork/devtools/tests-report-assembler@V1.1.1'
+        uses: 'GamuNetwork/devtools/test-report-assembler@V1.1.1'
         with:
           tests_reports: test-results
           output_file: report.json
