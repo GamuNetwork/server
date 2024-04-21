@@ -45,13 +45,13 @@ function parseStack(stack){ //type: string
         for (var i = 1; i < stack.length; i++){
             var line = stack[i].replace(/\n/g, "")
             //find if the line contain a file path
-            var filePath = line.match(/(\/.*\.js):([0-9]*):([0-9]*)/);
+            var filePath = line.match(/((\/|[A-Z]).*\.js):([0-9]*):([0-9]*)/);
             if(filePath !== null){
                 let tokens = filePath[0].split(":");
                 newStack.push({
                     columnNumber: tokens[tokens.length-1],
                     lineNumber: tokens[tokens.length-2],
-                    filePath: tokens.slice(0, tokens.length-2).join(":")
+                    filePath: tokens.slice(0, tokens.length-2).join(":").split("(")[1]
                 });
             }
         }
