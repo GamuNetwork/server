@@ -26,7 +26,7 @@ jobs:
           tests_reports: test-results
           output_file: report.json
 
-      - generate html report:
+      - name: generate html report
         uses: 'GamuNetwork/devtools/tests-exporter@V1.1.1'
         with:
           test-results-path: report.json
