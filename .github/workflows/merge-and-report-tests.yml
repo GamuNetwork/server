@@ -9,10 +9,6 @@ on:
     workflows: ["unit tests"]
     types:
       - completed
-    inputs:
-      platforms:
-        required: true
-        type: string # this will be a comma-separated list of platforms
   
 jobs:
   merge:
