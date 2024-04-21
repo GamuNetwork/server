@@ -1,0 +1,47 @@
+name: merge and report tests
+run-name: merge and report tests by @${{ github.actor }}
+
+# this workflow is triggered by another workflow, that handles all tests for all platforms
+# this workflow is responsible for merging test results from all platforms
+
+on:
+  workflow_run:
+    workflows: ["unit tests"]
+    types:
+      - completed
+    inputs:
+      platforms:
+        required: true
+        type: string # this will be a comma-separated list of platforms
+  
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      # no need to checkout code, as artifacts contains all the data we need
+
+      - name: Download test results
+        uses: actions/download-artifact@v4
+        with:
+          path: test-results
+
+      - name: get merger script
+        uses: GamuNetwork/devtools/tests-report-assembler@V1.1.1
+        with:
+          tests_reports: test-results
+          output_file: report.json
+
+      - generate html report
+        uses: GamuNetwork/devtools/tests-exporter@V1.1.1
+        with:
+          test-results-path: report.json
+          output-folder: test-reports
+
+      - name: Upload test reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports
+          path: test-reports
+        if: always()

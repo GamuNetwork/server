@@ -2,7 +2,7 @@ name: unit tests
 run-name: unit tests by @${{ github.actor }} on ${{ inputs.platform }}
 
 # this workflow is triggered by another workflow, that handles all tests for all platforms
-# this workflow is responsible for running tests on ubuntu platform
+# this workflow is responsible for running tests on a single platform
 
 on:
   workflow_call:
