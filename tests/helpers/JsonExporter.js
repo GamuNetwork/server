@@ -175,6 +175,6 @@ const JsonExporter = function(outputFile){
     }
 };
 
-reporter = new JsonExporter("report."+getOS()+".json");
+reporter = new JsonExporter(getOS()+".report.json");
 
 jasmine.getEnv().addReporter(reporter);
