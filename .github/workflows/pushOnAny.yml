@@ -21,3 +21,9 @@ jobs:
         uses: ./.github/workflows/merge-and-report-tests.yml
         needs: unitTests
         if: always()
+
+    publishReports:
+        # use the publishReports job from the same repository (and branch)
+        uses: ./.github/workflows/publish_report.yml
+        needs: reportTests
+        if: always()
