@@ -4,11 +4,9 @@ run-name: Publish test reports by @${{ github.actor }}
 on:
   - workflow_call
 
-env:
-  GH_TOKEN: ${{ secrets.GH_TOKEN }}
-
 jobs:
   publish:
+  environment: GitHub_Api_Token
     runs-on: ubuntu-latest
 
     steps:
@@ -25,6 +23,8 @@ jobs:
           test-reports-path: test-reports
           repository: ${{ github.repository }}
           branch: ${{ github.ref }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUBAPITOKEN }}
 
       - name: Cleanup
         run: rm -rf test-reports
