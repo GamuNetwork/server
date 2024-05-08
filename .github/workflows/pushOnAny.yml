@@ -15,3 +15,15 @@ jobs:
 
         with: # this will pass the platform to the called workflow
             platform: ${{ matrix.platform }}
+
+    reportTests:
+        # use the reportTests job from the same repository (and branch)
+        uses: ./.github/workflows/merge-and-report-tests.yml
+        needs: unitTests
+        if: always()
+
+    publishReports:
+        # use the publishReports job from the same repository (and branch)
+        uses: ./.github/workflows/publish_report.yml
+        needs: reportTests
+        if: always()
