@@ -6,7 +6,7 @@ on:
 
 jobs:
   publish:
-  environment: GitHub_Api_Token
+    environment: GitHub_Api_Token
     runs-on: ubuntu-latest
 
     steps:
