@@ -20,12 +20,11 @@ jobs:
           path: test-reports
 
       - name: Publish test reports
-        uses: 'GamuNetwork/devtools/test-reports-publisher@V1.2.8'
+        uses: 'GamuNetwork/devtools/test-reports-publisher@V1.2.9'
         with:
           test-reports-path: test-reports
           repository: ${{ github.repository }}
           branch: ${{ github.ref }}
-          gh_token: ${{ env.GH_TOKEN }}
 
       - name: Cleanup
         run: rm -rf test-reports
