@@ -17,7 +17,7 @@ jobs:
           path: test-reports
 
       - name: Publish test reports
-        uses: 'GamuNetwork/devtools/test-reports-publisher@V1.3.0'
+        uses: 'GamuNetwork/devtools/test-reports-publisher@V1.3.1'
         with:
           test-reports-path: test-reports
           repository: ${{ github.repository }}

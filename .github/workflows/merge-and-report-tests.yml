@@ -21,13 +21,13 @@ jobs:
           path: test-results
 
       - name: get merger script
-        uses: 'GamuNetwork/devtools/test-report-assembler@V1.3.0'
+        uses: 'GamuNetwork/devtools/test-report-assembler@V1.3.1'
         with:
           test_reports: test-results
           output_file: report.json
 
       - name: generate html report
-        uses: 'GamuNetwork/devtools/tests-exporter@V1.3.0'
+        uses: 'GamuNetwork/devtools/tests-exporter@V1.3.1'
         with:
           test-results-path: report.json
           output-folder: test-reports
