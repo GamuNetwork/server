@@ -1,9 +1,13 @@
 import http from 'http';
 import express from 'express';
 
+import { Logger, debug, info, error, critical, warning, deepDebug, COLORS } from '@gamunetwork/logger';
+
 import config from '../../config/WebServerApp/webserverapp.config.json' assert { type: "json" };
 
 import { handleRedirectAny } from '../appRequests/redirectRequests.mjs';
+
+Logger.setModule("WebServer");
 
 /**
  * @class ServerWebApp
@@ -30,7 +34,7 @@ export default class ServerWebApp {
 
     listen() {
         this.server.listen(config.port, () => {
-            console.log(`Server running on port ${config.port}`);
+            info(`Server running on port ${config.port}`);
             // logger.info('http server opened, listening on *:'+server.address().port);
         });
     }
