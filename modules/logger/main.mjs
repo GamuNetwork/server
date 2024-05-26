@@ -40,7 +40,7 @@ export default class LoggerWrapper {
             }, config.refreshRate * 1000);
             debug("Refreshing log file every " + config.refreshRate + " seconds");
             
-            info("initializaion complete with log level " + config.logLevel);
+            info("initializaion complete with log level " + LEVELS.name(config.level));
         }
         return LoggerWrapper._instance;
     }
