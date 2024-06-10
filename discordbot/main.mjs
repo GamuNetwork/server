@@ -1,5 +1,5 @@
 import Discord from 'discord.js';
-import Logger from '../modules/logger/main.mjs';
+import Logger from '#modules/logger/main.mjs';
 
 export default class DiscordClient {
 

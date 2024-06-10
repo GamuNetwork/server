@@ -1,12 +1,13 @@
 import http from 'http';
 import express from 'express';
 
+import { Logger, debug, info, error, critical, warning, deepDebug, COLORS } from '@gamunetwork/logger';
+
 import config from '../../config/WebServerApp/webserverapp.config.json' assert { type: "json" };
 
 import { handleRedirectAny } from '../appRequests/redirectRequests.mjs';
 
-import { Server } from "socket.io";
-import { handleRedirectRegister } from '../appRequests/formsRequest.mjs';
+Logger.setModule("WebServer");
 
 /**
  * @class ServerWebApp

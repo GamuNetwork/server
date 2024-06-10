@@ -27,6 +27,8 @@ jobs:
       
       - name: Install dependencies
         run: npm ci #! this requires a package-lock.json file
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run tests #this will run tests using jasmine
         run: npm test
