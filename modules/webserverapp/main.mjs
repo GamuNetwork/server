@@ -5,6 +5,9 @@ import config from '../../config/WebServerApp/webserverapp.config.json' assert {
 
 import { handleRedirectAny } from '../appRequests/redirectRequests.mjs';
 
+import { Server } from "socket.io";
+import { handleRedirectRegister } from '../appRequests/formsRequest.mjs';
+
 /**
  * @class ServerWebApp
  * @description Main class of the server's web application
@@ -24,6 +27,7 @@ export default class ServerWebApp {
 
             // handle requests
             this.app.get('/', (req, res) => { handleRedirectAny(req, res); });
+            this.app.post('/register', (req, res) => { handleRedirectRegister(req, res); });
         }
         return ServerWebApp._instance;
     }
@@ -31,7 +35,30 @@ export default class ServerWebApp {
     listen() {
         this.server.listen(config.port, () => {
             console.log(`Server running on port ${config.port}`);
-            // logger.info('http server opened, listening on *:'+server.address().port);
+            
+            const io = new Server({
+                cors: {
+                    origin: "*",
+                    methods: ["GET", "POST"]
+                }
+            });
+            io.listen(3001);
+
+            io.on('connection', (socket) => {
+                console.log('a user connected');
+                socket.on('disconnect', () => {
+                    console.log('user disconnected');
+                });
+
+                socket.on('message', (message) => {
+                    console.log('Got message: ', message);
+                    socket.emit('message', 'Received ' + message);
+                });
+
+            });
+
+            
+
         });
     }
 

@@ -29,9 +29,7 @@ export default class DiscordClient {
         this.logger = new Logger();
     }
     
-    login(TOKEN) { 
-        this.#client.login(TOKEN); 
-    }
+    login(TOKEN) { this.#client.login(TOKEN); }
     
     get client() { return this.#client; }
     get guild() { return this._guild; }
