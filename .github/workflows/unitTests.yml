@@ -41,15 +41,3 @@ jobs:
         if: always()
 
 
-  # assemble-results:
-  #   runs-on: ubuntu-latest
-  #   needs: test
-  #   steps:
-  #     - name: Download test results
-  #       uses: actions/download-artifact@v4
-  #       with:
-  #         path: test-results
-  #         pattern: test-results-*
-  #         merge-multiple: true
-
-  #     - name: Assemble test results
