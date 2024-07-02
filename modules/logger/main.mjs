@@ -155,7 +155,7 @@ export default class LoggerWrapper {
             const [, dateStr, hours, minutes] = match;
             const date = new Date(`${dateStr}T${hours}:${minutes}:00`);
             return new Date(date.getTime());
-        } else throw new Error('Invalid filename format');
+        } else throw new Error('Invalid filename format : ' + filename);
     }
 
     /**
@@ -169,6 +169,7 @@ export default class LoggerWrapper {
         let oldestDate = Infinity;
     
         files.forEach(file => {
+            if(file.endsWith(".zip")) return;
             const date = LoggerWrapper.parseDateFromFilename(file);
             if (date < oldestDate) {
                 oldestDate = date;
@@ -189,6 +190,7 @@ export default class LoggerWrapper {
         let newestFiles = [{file: null, date: -Infinity}, {file: null, date: -Infinity}];
     
         files.forEach(file => {
+            if(file.endsWith(".zip")) return;
             const date = LoggerWrapper.parseDateFromFilename(file);
             if (date > newestFiles[0].date) {
                 newestFiles[1] = {file: newestFiles[0].file, date: newestFiles[0].date};
