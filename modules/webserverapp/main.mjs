@@ -1,11 +1,14 @@
 import http from 'http';
 import express from 'express';
 
-import { Logger, debug, info, error, critical, warning, deepDebug, COLORS } from '@gamunetwork/logger';
+import { Logger, COLORS } from '@gamunetwork/logger';
 
-import config from '../../config/WebServerApp/webserverapp.config.json' assert { type: "json" };
+import { Settings } from '#modules/settings/main.mjs';
 
 import { handleRedirectAny } from '../appRequests/redirectRequests.mjs';
+
+import { Server } from "socket.io";
+// import { handleRedirectRegister } from '../appRequests/formsRequest.mjs'; //TODO missing file appRequests/formsRequest.mjs
 
 Logger.setModule("WebServer");
 
@@ -30,12 +33,13 @@ export default class ServerWebApp {
             this.app.get('/', (req, res) => { handleRedirectAny(req, res); });
             this.app.post('/register', (req, res) => { handleRedirectRegister(req, res); });
         }
+        Logger.debug("Initialization completed");
         return ServerWebApp._instance;
     }
 
     listen() {
-        this.server.listen(config.port, () => {
-            console.log(`Server running on port ${config.port}`);
+        this.server.listen(Settings.get('webServer.port'), () => {
+            Logger.info(`Server running on port ${Settings.get('webServer.port')}`);
             
             const io = new Server({
                 cors: {

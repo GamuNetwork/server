@@ -3,7 +3,7 @@
         "directory": "logs",
         "maxLogFiles": 10,
         "refreshRate": 1800,
-        "level": "deep_debug"
+        "level": "info"
     },
     "webServer" : {
         "port" : 3000
