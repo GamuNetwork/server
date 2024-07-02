@@ -12,7 +12,7 @@
   "author": "Lila BRANDON, Antoine BUIREY",
   "license": "ISC",
   "dependencies": {
-    "@gamunetwork/logger": "^1.1.4",
+    "@gamunetwork/logger": "^2.0.0",
     "archiver": "^7.0.1",
     "discord.js": "^14.12.1",
     "dotenv": "^16.4.5",
@@ -20,5 +20,9 @@
     "jasmine": "^5.1.0",
     "nodemon": "^3.1.0",
     "socket.io": "^4.7.5"
+  },
+  "imports": {
+    "#modules/*": "./modules/*",
+    "#config/*": "./config/*"
   }
 }
