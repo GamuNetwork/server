@@ -8,7 +8,7 @@ import { Settings } from '#modules/settings/main.mjs';
 import { handleRedirectAny } from '../appRequests/redirectRequests.mjs';
 
 import { Server } from "socket.io";
-// import { handleRedirectRegister } from '../appRequests/formsRequest.mjs'; //TODO missing file appRequests/formsRequest.mjs
+import { handleRedirectRegister } from '../appRequests/formsRequest.mjs';
 
 Logger.setModule("WebServer");
 

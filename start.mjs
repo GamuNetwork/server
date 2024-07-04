@@ -6,7 +6,7 @@ import { Settings } from '#modules/settings/main.mjs';
 import dotenv from 'dotenv';
 dotenv.config();
 
-import { info, warning, Logger } from '@gamunetwork/logger';
+import { info, warning } from '@gamunetwork/logger';
 
 // Logger to log the server activity
 import LoggerConfig from '#modules/logger/main.mjs';
