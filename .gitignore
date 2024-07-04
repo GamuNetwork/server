@@ -36,3 +36,7 @@ env/
 
 # tests reports
 *.report.json
+
+
+# environment files
+.env
