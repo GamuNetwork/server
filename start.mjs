@@ -1,5 +1,7 @@
 // SERVER IMPORTS
 
+import { Settings } from '#modules/settings/main.mjs';
+
 // DotEnv to read .env file
 import dotenv from 'dotenv';
 dotenv.config();

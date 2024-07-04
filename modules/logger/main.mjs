@@ -29,7 +29,7 @@ export default class LoggerWrapper {
             this._logFile = path.join(this._logFolder, LoggerWrapper.formatDate(new Date()) + ".log");
             let targetName = Logger.addTarget(this._logFile.toString()).name;
             
-            let level = LEVELS.fromString(Settings.get("logger.level"));
+            let level = Settings.get("logger.level");
 
             Logger.setLevel(targetName, level);
             debug("Logger initialized with log level " + LEVELS.name(level));

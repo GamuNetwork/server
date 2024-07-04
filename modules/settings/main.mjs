@@ -2,6 +2,8 @@ import { mergeDicts } from "./utils.mjs";
 import { commandLineArguments } from "./argsParse.mjs";
 import fs from 'fs';
 
+import { elementTypes } from "./elementTypes.mjs";
+
 const defaultConfigFilePath = "./config/default.config.json";
 
 class _Settings{
@@ -35,7 +37,12 @@ class _Settings{
             }
             current = current[keyTokens[i]];
         }
-        return current;
+        if(elementTypes[key]){
+            return elementTypes[key](current);
+        }
+        else{
+            return current;
+        }
     }
 }
 
