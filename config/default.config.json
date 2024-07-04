@@ -1,0 +1,11 @@
+{
+    "logger" : {
+        "directory": "logs",
+        "maxLogFiles": 10,
+        "refreshRate": 1800,
+        "level": "info"
+    },
+    "webServer" : {
+        "port" : 3000
+    }
+}

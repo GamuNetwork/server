@@ -7,7 +7,7 @@ import DiscordClient from '../../discordbot/main.mjs';
 
 import { Logger, debug, info, error, critical, warning, deepDebug, COLORS, LEVELS } from '@gamunetwork/logger';
 
-import config from '#config/Logger/logger.config.mjs';
+import { Settings } from '#modules/settings/main.mjs';
 
 Logger.setModule("Logger");
 
@@ -24,23 +24,25 @@ export default class LoggerWrapper {
     constructor() {
         if(!LoggerWrapper._instance) {
             LoggerWrapper._instance = this;
-            this._logFolder = config.directory;
+            this._logFolder = Settings.get("logger.directory");
 
             this._logFile = path.join(this._logFolder, LoggerWrapper.formatDate(new Date()) + ".log");
-            Logger.setTarget(this._logFile.toString());
+            let targetName = Logger.addTarget(this._logFile.toString()).name;
             
-            Logger.setLevel(config.level);
-            debug("Logger initialized with log level " + LEVELS.name(config.level));
+            let level = Settings.get("logger.level");
+
+            Logger.setLevel(targetName, level);
+            debug("Logger initialized with log level " + LEVELS.name(level));
 
             this.discordBot = new DiscordClient();
             this.load();
             
             this.intervalId = setInterval(() => { //execute it at a regular interval set in server.settings
                 this.load();
-            }, config.refreshRate * 1000);
-            debug("Refreshing log file every " + config.refreshRate + " seconds");
+            }, Settings.get("logger.refreshRate") * 1000);
+            debug("Refreshing log file every " + Settings.get("logger.refreshRate") + " seconds");
             
-            info("initializaion complete with log level " + LEVELS.name(config.level));
+            info("initializaion complete with log level " + LEVELS.name(level));
         }
         return LoggerWrapper._instance;
     }
@@ -73,7 +75,7 @@ export default class LoggerWrapper {
     archiveOldLogs() {
         const files = fs.readdirSync(this._logFolder);
         
-        if(files.length <= config.maxLogFiles) {
+        if(files.length <= Settings.get("logger.maxLogFiles")) {
             debug("Number of log files is under the maximum specified in config, no archiving will be done");
             return;
         }
@@ -153,7 +155,7 @@ export default class LoggerWrapper {
             const [, dateStr, hours, minutes] = match;
             const date = new Date(`${dateStr}T${hours}:${minutes}:00`);
             return new Date(date.getTime());
-        } else throw new Error('Invalid filename format');
+        } else throw new Error('Invalid filename format : ' + filename);
     }
 
     /**
@@ -167,6 +169,7 @@ export default class LoggerWrapper {
         let oldestDate = Infinity;
     
         files.forEach(file => {
+            if(file.endsWith(".zip")) return;
             const date = LoggerWrapper.parseDateFromFilename(file);
             if (date < oldestDate) {
                 oldestDate = date;
@@ -187,6 +190,7 @@ export default class LoggerWrapper {
         let newestFiles = [{file: null, date: -Infinity}, {file: null, date: -Infinity}];
     
         files.forEach(file => {
+            if(file.endsWith(".zip")) return;
             const date = LoggerWrapper.parseDateFromFilename(file);
             if (date > newestFiles[0].date) {
                 newestFiles[1] = {file: newestFiles[0].file, date: newestFiles[0].date};

@@ -32,7 +32,7 @@ env/
 *.log
 *.db
 */logs
-*/log
+logs/
 
 # tests reports
 *.report.json
