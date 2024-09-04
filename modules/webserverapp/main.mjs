@@ -31,7 +31,7 @@ export default class ServerWebApp {
 
             // handle requests
             this.app.get('/', (req, res) => { handleRedirectAny(req, res); });
-            this.app.post('/register', (req, res) => { handleRedirectRegister(req, res); });
+            this.app.post('/register', async (req, res) => { handleRedirectRegister(req, res); });
         }
         Logger.debug("Initialization completed");
         return ServerWebApp._instance;
