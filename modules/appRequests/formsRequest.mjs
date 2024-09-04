@@ -1,21 +1,39 @@
 import { MongoClient } from "mongodb";
+import { Logger } from "@gamunetwork/logger";
 
-export async function handleRedirectRegister(req, res) {
+import { generateUUID } from "#modules/utils/main.mjs";
+
+async function getDatabaseConnection() {
     // Il faudra penser à mettre ça en variable d'environnement
-    const username = "GamuClient"
-    const password = encodeURIComponent("Kn8_#sE@az378")
-    const uri = `mongodb://${username}:${password}@vps.gamunetwork.com:27017/GamuNetwork`
-
+    const dbUsername = "GamuClient"
+    const dbPassword = encodeURIComponent("Kn8_#sE@az378")
+    const uri = `mongodb://${dbUsername}:${dbPassword}@vps.gamunetwork.com:27017/GamuNetwork`
     const client = new MongoClient(uri);
     await client.connect();
-    client.db("GamuNetwork").collection("players").insertOne({ name: "test" });
-    return res.send('Register');
+    return client.db("GamuNetwork");
 }
 
-export function handleRedirectLogin(req, res) {
+export async function handleRedirectRegister(req, res) {
+
+    await getDatabaseConnection().then(database => {
+        Logger.debug("Connected to the database while trying to register a new user");
+        
+        const username = req.body.username;
+        const password = req.body.password;
+        const email = req.body.email;
+
+        const uuid = generateUUID();
+    
+        database.collection("players").insertOne({ uuid: uuid, username: username, password: password, email: email, friends: [] });
+    });
+
+    return res.send({status: "success", token: "token"});
+}
+
+export async function handleRedirectLogin(req, res) {
     return res.send('Login');
 }
 
-export function handleRedirectForgotPassword(req, res) {
+export async function handleRedirectForgotPassword(req, res) {
     return res.send('Forgot Password');
 }

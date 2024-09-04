@@ -15,8 +15,8 @@ new LoggerConfig();
 // Discord Bot to handle some archiving and further features
 import DiscordClient from './discordbot/main.mjs';
 if(process.env.DISCORD_TOKEN != undefined) {
-    const discordBot = new DiscordClient();
-    discordBot.login(process.env.DISCORD_TOKEN);
+    //const discordBot = new DiscordClient();
+    //discordBot.login(process.env.DISCORD_TOKEN);
     info("Discord bot started");
 }
 else{

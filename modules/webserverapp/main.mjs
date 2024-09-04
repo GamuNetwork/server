@@ -1,5 +1,6 @@
 import http from 'http';
 import express from 'express';
+import cors from 'cors';
 
 import { Logger, COLORS } from '@gamunetwork/logger';
 
@@ -27,6 +28,8 @@ export default class ServerWebApp {
             ServerWebApp._instance = this;
             // initialize the server
             this.app = express();
+            this.app.use(cors());
+            this.app.use(express.json());
             this.server = http.createServer(this.app);
 
             // handle requests
