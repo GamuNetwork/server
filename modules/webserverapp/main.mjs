@@ -9,7 +9,8 @@ import { Settings } from '#modules/settings/main.mjs';
 import { handleRedirectAny } from '../appRequests/redirectRequests.mjs';
 
 import { Server } from "socket.io";
-import { handleRedirectRegister } from '../appRequests/formsRequest.mjs';
+import { handleRedirectLogin, handleRedirectRegister } from '../appRequests/formsRequest.mjs';
+import { authenticateToken } from '#modules/utils/main.mjs';
 
 Logger.setModule("WebServer");
 
@@ -33,8 +34,9 @@ export default class ServerWebApp {
             this.server = http.createServer(this.app);
 
             // handle requests
-            this.app.get('/', (req, res) => { handleRedirectAny(req, res); });
+            this.app.get('/', authenticateToken, (req, res) => { handleRedirectAny(req, res); });
             this.app.post('/register', async (req, res) => { handleRedirectRegister(req, res); });
+            this.app.post('/login', async (req, res) => { handleRedirectLogin(req, res); });
         }
         Logger.debug("Initialization completed");
         return ServerWebApp._instance;

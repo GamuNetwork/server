@@ -34,7 +34,7 @@ export default class LoggerWrapper {
             Logger.setLevel(targetName, level);
             debug("Logger initialized with log level " + LEVELS.name(level));
 
-            this.discordBot = new DiscordClient();
+            //this.discordBot = new DiscordClient();
             this.load();
             
             this.intervalId = setInterval(() => { //execute it at a regular interval set in server.settings
@@ -95,7 +95,7 @@ export default class LoggerWrapper {
             debug(archive.pointer() + ' bytes total');
             debug('Finished archiving logs.');
             const attachment = new AttachmentBuilder(`./logs/${zipName}`, {name: zipName});
-            const channel = this.discordBot.guild.channels.cache.get('1224823809266155600');
+            /*const channel = this.discordBot.guild.channels.cache.get('1224823809266155600');
             channel.send({files: [attachment]}).then(() => {
                 info("Logs files sent archive to Discord");
                 
@@ -104,7 +104,7 @@ export default class LoggerWrapper {
                 fs.unlinkSync(`./logs/${zipName}`);
 
                 
-            }).catch(console.error);
+            }).catch(console.error);*/
             
         });
         
